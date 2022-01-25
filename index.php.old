@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Responsive Table + Detail View</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  
+      <link rel="stylesheet" href="css/style.css">
+
+   <?PHP 
+    if(!isset($_POST['cubeperhour'])) {
+        $cubeperhour = '0';
+    }      
+    else {
+		$cubeperhour = $_POST['cubeperhour'];
+}
+    if(!isset($_POST['gold'])) {
+        $gold = '0';
+    }      
+    else {
+		$gold = $_POST['gold'];
+}
+    if(!isset($_POST['silver'])) {
+        $silver = '0';
+    }      
+    else {
+		$silver = $_POST['silver'];
+}
+    if(!isset($_POST['common'])) {
+        $common = '0';
+    }      
+    else {
+		$common = $_POST['common'];
+}
+    if(!isset($_POST['golda'])) {
+        $golda = '0';
+    }      
+    else {
+		$golda = $_POST['golda'];
+}
+    if(!isset($_POST['silvera'])) {
+        $silvera = '0';
+    }      
+    else {
+		$silvera = $_POST['silvera'];
+}
+    if(!isset($_POST['commona'])) {
+        $commona = '0';
+    }      
+    else {
+		$commona = $_POST['commona'];
+}
+?>
+<?php
+
+$url = 'https://api.coingecko.com/api/v3/simple/price?ids=wax&vs_currencies=usd';
+// Collection object
+
+// Initializes a new cURL session
+$curl = curl_init($url);
+// Set the CURLOPT_RETURNTRANSFER option to true
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+// Set the CURLOPT_POST option to true for POST request
+curl_setopt($curl, CURLOPT_POST, false);
+// Set the request data as JSON using json_encode function
+
+// Set custom headers for RapidAPI Auth and Content-Type header
+curl_setopt($curl, CURLOPT_HTTPHEADER, [
+  'Content-Type: application/json'
+]);
+// Execute cURL request with all previous settings
+$waxpricejson = curl_exec($curl);
+// Close cURL session
+curl_close($curl);
+$waxpricejson = json_decode($waxpricejson, true);
+
+$url = 'https://wax.alcor.exchange/api/markets/296';
+// Collection object
+
+// Initializes a new cURL session
+$curl = curl_init($url);
+// Set the CURLOPT_RETURNTRANSFER option to true
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+// Set the CURLOPT_POST option to true for POST request
+curl_setopt($curl, CURLOPT_POST, false);
+// Set the request data as JSON using json_encode function
+
+// Set custom headers for RapidAPI Auth and Content-Type header
+curl_setopt($curl, CURLOPT_HTTPHEADER, [
+  'Content-Type: application/json'
+]);
+// Execute cURL request with all previous settings
+$cubepricejson = curl_exec($curl);
+// Close cURL session
+curl_close($curl);
+$cubepricejson = json_decode($cubepricejson, true);
+
+$url = 'https://wax.alcor.exchange/api/markets/297';
+// Collection object
+
+// Initializes a new cURL session
+$curl = curl_init($url);
+// Set the CURLOPT_RETURNTRANSFER option to true
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+// Set the CURLOPT_POST option to true for POST request
+curl_setopt($curl, CURLOPT_POST, false);
+// Set the request data as JSON using json_encode function
+
+// Set custom headers for RapidAPI Auth and Content-Type header
+curl_setopt($curl, CURLOPT_HTTPHEADER, [
+  'Content-Type: application/json'
+]);
+// Execute cURL request with all previous settings
+$Kryptonpricejson = curl_exec($curl);
+// Close cURL session
+curl_close($curl);
+$Kryptonpricejson = json_decode($Kryptonpricejson, true);
+?>
+
+</head>
+
+<body>
+  <h1>
+  <a href="index.php">KRYPTON Calculator</a>
+<a href="kryptonchecker.php">KRYPTON NFT Checker</a>
+ </h1>
+   
+     
+
+  <h1>
+  KRYPTON Calculator
+</h1>
+
+<main>
+<table>
+    <thead>
+      <tr>
+        <th>
+          WAX Price : <?php echo $waxpricejson['wax']['usd']; ?> USD
+        </th>
+        <th>
+          Cube Price :  <?php echo $cubepricejson['last_price'];?> WAX | <?php echo $cubepricejson['last_price']*$waxpricejson['wax']['usd'];?> USD
+        </th>
+          <th>
+          Krypton Price <?php echo $Kryptonpricejson['last_price'];?> WAX | <?php echo $Kryptonpricejson['last_price']*$waxpricejson['wax']['usd'];?> USD
+        </th>
+        
+      </tr>
+    </thead>
+    <tfoot>
+	</table>
+		<br>
+	<table>
+    <thead>
+      <tr>
+        <th>
+         
+		  <form action="index.php" method="post">
+ Cube/hr: <input type="text" name="cubeperhour" size="4">
+ </th>
+  <th>
+  Gold miner: <input type="text" name="gold" pattern="[0-9]+" size="4">
+  </th>
+   <th>
+  Silver miner: <input type="text" name="silver" pattern="[0-9]+" size="4">
+  </th>
+   <th>
+  Common miner: <input type="text" name="common" pattern="[0-9]+" size="4">
+
+        </th>
+  <th>
+  Gold attacker: <input type="text" name="golda" pattern="[0-9]+" size="4">
+  </th>
+   <th>
+  Silver attacker: <input type="text" name="silvera" pattern="[0-9]+" size="4">
+  </th>
+   <th>
+  Common attacker: <input type="text" name="commona" pattern="[0-9]+" size="4">
+
+
+	 </th>
+      </tr>
+<tr><td colspan='7' style="text-align:center">    <input type="submit"></form></td></tr>
+    </thead>
+	</table>
+	<br>
+  <table>
+   
+
+    <tbody>
+      <tr>
+        <td data-title='Provider Name'>
+           Cube/hr: <?php echo $cubeperhour; ?>
+        </td>
+        <td >
+          Gold miner: <?php echo $gold; ?>
+        </td>
+		
+		   <td >
+          Silver miner: <?php echo $silver; ?>
+        </td>
+           <td >
+          Common miner: <?php echo $common; ?>
+        </td>
+        
+      </tr>
+	      <tr>
+        
+        <td >
+          Gold attacker: <?php echo $golda; ?>
+        </td>
+		
+		   <td >
+          Silver attacker: <?php echo $silvera; ?>
+        </td>
+           <td >
+          Common attacker: <?php echo $commona; ?>
+        </td>
+        
+      </tr>
+           <tr>
+        <td data-title='Provider Name'>
+           Cube cost/hr: <?php $cubehrcost=($gold*0.1)+($silver*0.1429)+($common*0.1875); $acubehrcost=($golda*0.107)+($silvera*0.15)+($commona*0.1875);  echo ($cubehrcost+$acubehrcost); ?> Cube
+        </td>
+        <td >
+          Krypton cost/hr: <?php  $Kryptonhrcost=($gold*0.005)+($silver*0.007)+($common*0.009375); $Kryptonhrcosta=($golda*0.00535)+($silvera*0.0075)+($commona*0.009375);echo ($Kryptonhrcost+$acubehrcost); ?> Krypton
+        </td>
+		
+		   <td >
+          Cube cost/day : <?php echo ($cubehrcost+$acubehrcost)*24; ?> Cube
+        </td>
+           <td >
+          Krypton cost/day: <?php echo ($Kryptonhrcost+$Kryptonhrcosta)*24; ?> Krypton
+        </td>
+		</tr>
+		  </table>
+		  <hr><br>
+	  <table>	  
+	    <tfoot>
+      <tr>
+        <th colspan='3'>
+          Want to tip me WAX / NFTs / Wax blockchain Tokens in this address: d5hba.wam
+        </th>
+      </tr>
+    </tfoot>
+          <tr>
+        <td data-title='Provider Name'>
+          Earning/hr after refill 
+        </td>
+        <td >
+          Earning/day after refill 
+        </td>
+		
+		   <td >
+          Earning/month(30days) after refill
+        </td>
+		 </tr>
+		 
+                 <tr>
+				 
+        <td data-title='Provider Name'>
+          <?php $earninghr=($cubeperhour*$cubepricejson['last_price'])-(($cubehrcost+$acubehrcost)*$cubepricejson['last_price'])-(($Kryptonhrcost+$Kryptonhrcosta)*$Kryptonpricejson['last_price']); echo $earninghr;  ?> WAX | <?php echo  $earninghr*$waxpricejson['wax']['usd'] ?> USD
+        </td>
+        <td >
+         <?php echo $earninghr*24 ?> WAX | <?php echo  $earninghr*$waxpricejson['wax']['usd']*24 ?> USD
+        </td>
+		
+		   <td >
+          <?php echo $earninghr*24*30 ?> WAX | <?php echo  $earninghr*$waxpricejson['wax']['usd']*24*30 ?> USD
+        </td>
+        
+      </tr>
+       
+  </table>
+ 
+ 
+
+</main>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+    <script src="js/index.js"></script>
+
+</body>
+</html>
